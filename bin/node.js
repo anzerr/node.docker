@@ -61,13 +61,17 @@ class Node extends util.Build {
 					`cd "node-v${this.env.NODE_VERSION}"`,
 					'./configure',
 					'make -j$(getconf _NPROCESSORS_ONLN) V=',
+					'echo "make build done"',
 					'make install',
+					'echo "make install done"',
 					'apk del .build-deps',
+					'echo "apk del done"',
 					'cd ..',
 					`rm -Rf "node-v${this.env.NODE_VERSION}"`,
 					`rm "node-v${this.env.NODE_VERSION}.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt`
 				])
 				.run([
+					'echo "start install yarm"',
 					'apk add --no-cache --virtual .build-deps-yarn curl gnupg tar',
 					/*eslint-disable */
 					`for key in \
@@ -90,6 +94,10 @@ class Node extends util.Build {
 				])
 				.cmd('["node"]');
 		});
+	}
+
+	info() {
+		return Promise.resolve({});
 	}
 
 	toFile() {

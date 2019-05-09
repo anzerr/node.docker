@@ -35,6 +35,10 @@ class Node extends util.Build {
 		});
 	}
 
+	info() {
+		return Promise.resolve({});
+	}
+
 	toFile() {
 		return mkdir(this.path).then(() => {
 			return super.toFile();
