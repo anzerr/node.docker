@@ -1,5 +1,6 @@
 
-const util = require('dockerfile.util');
+const util = require('dockerfile.util'),
+	mkdir = require('fs.mkdirp');
 
 const ENUM = {BUILD: 0, FINAL: 1};
 
@@ -10,7 +11,8 @@ class Node extends util.Build {
 		this.dockerfile.push(new util.Dockerfile());
 		this.author = 'anzerr';
 		this.version = `slim-${version}`;
-		this.dockerName = `Dockerfile.${this.version}`;
+		this.path = `docker/${version}/slim`;
+		this.dockerName = 'Dockerfile';
 		this.env = {
 			VERSION: version
 		};
@@ -30,6 +32,12 @@ class Node extends util.Build {
 				.copy('--from=0 /usr/local/bin/node /usr/local/bin/')
 				.copy('--from=0 /usr/lib/libgcc* /usr/lib/libstdc* /usr/lib/')
 				.cmd('["node"]');
+		});
+	}
+
+	toFile() {
+		return mkdir(this.path).then(() => {
+			return super.toFile();
 		});
 	}
 

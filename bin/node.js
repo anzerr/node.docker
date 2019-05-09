@@ -1,5 +1,6 @@
 
-const util = require('dockerfile.util');
+const util = require('dockerfile.util'),
+	mkdir = require('fs.mkdirp');
 
 class Node extends util.Build {
 
@@ -7,7 +8,8 @@ class Node extends util.Build {
 		super();
 		this.author = 'anzerr';
 		this.version = node.match(/^(\d+)\./)[1];
-		this.dockerName = `Dockerfile.${this.version}`;
+		this.path = `docker/${this.version}`;
+		this.dockerName = 'Dockerfile';
 		this.env = {
 			NODE_VERSION: node,
 			YARN_VERSION: yarn
@@ -87,6 +89,12 @@ class Node extends util.Build {
 					'apk del .build-deps-yarn'
 				])
 				.cmd('["node"]');
+		});
+	}
+
+	toFile() {
+		return mkdir(this.path).then(() => {
+			return super.toFile();
 		});
 	}
 
