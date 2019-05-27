@@ -1,8 +1,7 @@
 
-const util = require('dockerfile.util'),
-	mkdir = require('fs.mkdirp');
+const mkdir = require('fs.mkdirp');
 
-class Node extends util.Build {
+class Node extends require('../base.js') {
 
 	constructor(node, yarn) {
 		super();
@@ -22,8 +21,8 @@ class Node extends util.Build {
 				.run([
 					'addgroup -g 1000 node',
 					'adduser -u 1000 -G node -s /bin/sh -D node',
-					'apk add --no-cache libstdc++',
-					'apk add --no-cache --virtual .build-deps' + [
+					'apk add --update --no-cache libstdc++',
+					'apk add --no-cache --virtual .build-deps ' + [
 						'binutils-gold',
 						'curl',
 						'g++',
@@ -82,22 +81,18 @@ class Node extends util.Build {
 						gpg --batch --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
 					done`,
 					/* eslint-enable */
-					'curl -fsSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz"',
-					'curl -fsSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc"',
-					'gpg --batch --verify yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz',
+					`curl -fsSLO --compressed "https://yarnpkg.com/downloads/${this.env.YARN_VERSION}/yarn-v${this.env.YARN_VERSION}.tar.gz"`,
+					`curl -fsSLO --compressed "https://yarnpkg.com/downloads/${this.env.YARN_VERSION}/yarn-v${this.env.YARN_VERSION}.tar.gz.asc"`,
+					`gpg --batch --verify yarn-v${this.env.YARN_VERSION}.tar.gz.asc yarn-v${this.env.YARN_VERSION}.tar.gz`,
 					'mkdir -p /opt',
-					'tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/',
-					'ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn',
-					'ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg',
-					'rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz',
+					`tar -xzf yarn-v${this.env.YARN_VERSION}.tar.gz -C /opt/`,
+					`ln -s /opt/yarn-v${this.env.YARN_VERSION}/bin/yarn /usr/local/bin/yarn`,
+					`ln -s /opt/yarn-v${this.env.YARN_VERSION}/bin/yarnpkg /usr/local/bin/yarnpkg`,
+					`rm yarn-v${this.env.YARN_VERSION}.tar.gz.asc yarn-v${this.env.YARN_VERSION}.tar.gz`,
 					'apk del .build-deps-yarn'
 				])
 				.cmd('["node"]');
 		});
-	}
-
-	info() {
-		return Promise.resolve({});
 	}
 
 	toFile() {

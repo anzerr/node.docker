@@ -1,4 +1,4 @@
-FROM anzerr/node:11
+FROM anzerr/node:12
 RUN apk add --no-cache binutils && \
 	strip /usr/local/bin/node && \
 	apk del binutils

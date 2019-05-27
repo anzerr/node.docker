@@ -4,7 +4,7 @@ const util = require('dockerfile.util'),
 
 const ENUM = {BUILD: 0, FINAL: 1};
 
-class Node extends util.Build {
+class Node extends require('../base.js') {
 
 	constructor(version) {
 		super();
@@ -33,10 +33,6 @@ class Node extends util.Build {
 				.copy('--from=0 /usr/lib/libgcc* /usr/lib/libstdc* /usr/lib/')
 				.cmd('["node"]');
 		});
-	}
-
-	info() {
-		return Promise.resolve({});
 	}
 
 	toFile() {
