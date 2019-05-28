@@ -5,9 +5,11 @@
 	"main": "index.js",
 	"scripts": {
 		"update": "node bin/index.js",
+		"build-12": "node bin/index.js --name node:12",
 		"build-11": "node bin/index.js --name node:11",
 		"build-10": "node bin/index.js --name node:10",
 		"build-6": "node bin/index.js --name node:6",
+		"build-slim-12": "node bin/index.js --name node:slim-12",
 		"build-slim-11": "node bin/index.js --name node:slim-11",
 		"build-slim-10": "node bin/index.js --name node:slim-10",
 		"build-slim-6": "node bin/index.js --name node:slim-6"
