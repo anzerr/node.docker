@@ -32,7 +32,8 @@
 		"cli.util": "git+https://git@github.com/anzerr/cli.util.git",
 		"dockerfile.util": "git+https://git@github.com/anzerr/dockerfile.util.git",
 		"fs.mkdirp": "git+https://git@github.com/anzerr/fs.mkdirp.git",
-		"fs.promisify": "git+https://git@github.com/anzerr/fs.promisify.git"
+		"fs.promisify": "git+https://git@github.com/anzerr/fs.promisify.git",
+		"request.libary": "git+https://github.com/anzerr/request.libary.git"
 	},
 	"repository": {
 		"type": "git",

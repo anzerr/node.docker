@@ -1,10 +1,10 @@
 
-name: docker6
+name: docker9
 
 on:
   push:
     paths:
-      - docker/6/**
+      - docker/9/**
 
 jobs:
   docker:
@@ -17,31 +17,31 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: docker.pkg.github.com
           args: |
-            cd docker/6
-            docker build -t docker.pkg.github.com/anzerr/node/node:6 . &&
-            docker push docker.pkg.github.com/anzerr/node/node:6
+            cd docker/9
+            docker build -t docker.pkg.github.com/anzerr/node/node:9 . &&
+            docker push docker.pkg.github.com/anzerr/node/node:9
       - uses: anzerr/docker.action@master
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
           args: |
-            cd docker/6
-            docker build -t anzerr/node:6 . &&
-            docker push anzerr/node:6
+            cd docker/9
+            docker build -t anzerr/node:9 . &&
+            docker push anzerr/node:9
       - uses: anzerr/docker.action@master
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: docker.pkg.github.com
           args: |
-            cd docker/6/slim
-            docker build -t docker.pkg.github.com/anzerr/node/node:slim-6 . &&
-            docker push docker.pkg.github.com/anzerr/node/node:slim-6
+            cd docker/9/slim
+            docker build -t docker.pkg.github.com/anzerr/node/node:slim-9 . &&
+            docker push docker.pkg.github.com/anzerr/node/node:slim-9
       - uses: anzerr/docker.action@master
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
           args: |
-            cd docker/6/slim
-            docker build -t anzerr/node:slim-6 . &&
-            docker push anzerr/node:slim-6
+            cd docker/9/slim
+            docker build -t anzerr/node:slim-9 . &&
+            docker push anzerr/node:slim-9

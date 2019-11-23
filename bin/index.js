@@ -3,23 +3,9 @@
 const {Cli, Map} = require('cli.util'),
 	Node = require('./images/node.js'),
 	Slim = require('./images/slim.js'),
+	Request = require('request.libary'),
 	fs = require('fs.promisify'),
 	workflow = require('./workflow.js');
-
-const builds = {
-	'node:13': ['13.1.0', '1.19.1', Node, '13'],
-	'node:12': ['12.13.0', '1.19.1', Node, '12'],
-	'node:11': ['11.14.0', '1.19.1', Node, '11'],
-	'node:10': ['10.17.0', '1.19.1', Node, '10'],
-	'node:8': ['8.16.2', '1.19.1', Node, '8'],
-	'node:6': ['6.17.1', '1.19.1', Node, '6'],
-	'node:slim-13': ['13', null, Slim, '13'],
-	'node:slim-12': ['12', null, Slim, '12'],
-	'node:slim-11': ['11', null, Slim, '11'],
-	'node:slim-10': ['10', null, Slim, '10'],
-	'node:slim-8': ['8', null, Slim, '8'],
-	'node:slim-6': ['6', null, Slim, '6']
-};
 
 let cli = new Cli(process.argv, [
 	new Map('name')
@@ -28,25 +14,49 @@ let cli = new Cli(process.argv, [
 
 console.log('.');
 if (!cli.get('name')) {
-	let wait = [];
-	for (let i in builds) {
-		((v) => {
-			let a = new (v[2])(v[0], v[1]);
-			wait.push(a.toFile().then(() => {
-				return fs.writeFile(`.github/workflows/docker${v[3]}.yml`, workflow(v[3]));
-			}));
-		})(builds[i]);
-	}
-	Promise.all(wait).then(() => console.log('done'));
-} else {
-	let v = builds[cli.get('name') || ''];
-	if (v) {
-		new (v[2])(v[0], v[1]).run().then(() => {
-			return fs.writeFile(`.github/workflows/docker${v[3]}.yml`, workflow(v[3]));
-		}).then(() => {
-			console.log('Server started');
-		});
-	} else {
-		throw new Error('not a valid name given');
-	}
+	new Request('https://nodejs.org').get('/dist/index.json').then((res) => {
+		if (res.isOkay()) {
+			let body = res.parse();
+			if (!Buffer.isBuffer(body)) {
+				return body;
+			}
+		}
+		throw new Error('failed request');
+	}).then((versions) => {
+		const map = {};
+		for (let i in versions) {
+			let v = versions[i].version.replace('v', '').split('.').map((a) => Number(a));
+			if (v[0] >= 6) {
+				if (map[v[0]]) {
+					const m = map[v[0]];
+					for (let x in v) {
+						if (m[x] < v[x]) {
+							map[v[0]] = v;
+							break;
+						}
+						if (m[x] !== v[x]) {
+							break;
+						}
+					}
+				} else {
+					map[v[0]] = v;
+				}
+			}
+		}
+		return map;
+	}).then((res) => {
+		let wait = [];
+		for (let i in res) {
+			((key, v) => {
+				wait.push(Promise.all([
+					new Node(v, '1.19.1').toFile(),
+					new Slim(key).toFile(),
+					fs.writeFile(`.github/workflows/docker${key}.yml`, workflow(key))
+				]));
+			})(i, res[i].join('.'));
+		}
+		Promise.all(wait).then(() => console.log('done'));
+	}).catch((err) => {
+		console.log(err);
+	});
 }
