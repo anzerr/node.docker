@@ -6,4 +6,4 @@ RUN apk add --no-cache binutils && \
 FROM alpine:3.9
 COPY --from=0 /usr/local/bin/node /usr/local/bin/
 COPY --from=0 /usr/lib/libgcc* /usr/lib/libstdc* /usr/lib/
-CMD ["node"]
+ENTRYPOINT ["node"]

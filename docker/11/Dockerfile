@@ -23,13 +23,13 @@ RUN addgroup -g 1000 node && \
 RUN echo "start install yarm" && \
 	apk add --no-cache --virtual .build-deps-yarn curl gnupg tar && \
 	for key in 						6A010C5166006599AA17F08146C2130DFD2497F5 					; do 						gpg --batch --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" || 						gpg --batch --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys "$key" || 						gpg --batch --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; 					done && \
-	curl -fsSLO --compressed "https://yarnpkg.com/downloads/1.15.2/yarn-v1.15.2.tar.gz" && \
-	curl -fsSLO --compressed "https://yarnpkg.com/downloads/1.15.2/yarn-v1.15.2.tar.gz.asc" && \
-	gpg --batch --verify yarn-v1.15.2.tar.gz.asc yarn-v1.15.2.tar.gz && \
+	curl -fsSLO --compressed "https://yarnpkg.com/downloads/1.19.1/yarn-v1.19.1.tar.gz" && \
+	curl -fsSLO --compressed "https://yarnpkg.com/downloads/1.19.1/yarn-v1.19.1.tar.gz.asc" && \
+	gpg --batch --verify yarn-v1.19.1.tar.gz.asc yarn-v1.19.1.tar.gz && \
 	mkdir -p /opt && \
-	tar -xzf yarn-v1.15.2.tar.gz -C /opt/ && \
-	ln -s /opt/yarn-v1.15.2/bin/yarn /usr/local/bin/yarn && \
-	ln -s /opt/yarn-v1.15.2/bin/yarnpkg /usr/local/bin/yarnpkg && \
-	rm yarn-v1.15.2.tar.gz.asc yarn-v1.15.2.tar.gz && \
+	tar -xzf yarn-v1.19.1.tar.gz -C /opt/ && \
+	ln -s /opt/yarn-v1.19.1/bin/yarn /usr/local/bin/yarn && \
+	ln -s /opt/yarn-v1.19.1/bin/yarnpkg /usr/local/bin/yarnpkg && \
+	rm yarn-v1.19.1.tar.gz.asc yarn-v1.19.1.tar.gz && \
 	apk del .build-deps-yarn
 ENTRYPOINT ["node"]

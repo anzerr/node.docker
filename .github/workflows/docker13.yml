@@ -1,0 +1,47 @@
+
+name: docker13
+
+on:
+  push:
+    paths:
+      - docker/13/**
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: anzerr/docker.action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: docker.pkg.github.com
+          args: |
+            cd docker/13
+            docker build -t anzerr/node/node:13 . &&
+            docker push anzerr/node/node:13
+      - uses: anzerr/docker.action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          args: |
+            cd docker/13
+            docker build -t anzerr/node:13 . &&
+            docker push anzerr/node:13
+      - uses: anzerr/docker.action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: docker.pkg.github.com
+          args: |
+            cd docker/13/slim
+            docker build -t anzerr/node/node:slim-13 . &&
+            docker push anzerr/node/node:slim-13
+      - uses: anzerr/docker.action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          args: |
+            cd docker/13/slim
+            docker build -t anzerr/node:slim-13 . &&
+            docker push anzerr/node:slim-13
