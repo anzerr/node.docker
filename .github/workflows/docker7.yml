@@ -18,8 +18,8 @@ jobs:
           registry: docker.pkg.github.com
           args: |
             cd docker/7
-            docker build -t docker.pkg.github.com/anzerr/node/node:7 . &&
-            docker push docker.pkg.github.com/anzerr/node/node:7
+            docker build -t docker.pkg.github.com/anzerr/node.docker/node.docker:7 . &&
+            docker push docker.pkg.github.com/anzerr/node.docker/node.docker:7
       - uses: anzerr/docker.action@master
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
@@ -35,8 +35,8 @@ jobs:
           registry: docker.pkg.github.com
           args: |
             cd docker/7/slim
-            docker build -t docker.pkg.github.com/anzerr/node/node:slim-7 . &&
-            docker push docker.pkg.github.com/anzerr/node/node:slim-7
+            docker build -t docker.pkg.github.com/anzerr/node.docker/node.docker:slim-7 . &&
+            docker push docker.pkg.github.com/anzerr/node.docker/node.docker:slim-7
       - uses: anzerr/docker.action@master
         with:
           username: ${{ secrets.DOCKER_USERNAME }}

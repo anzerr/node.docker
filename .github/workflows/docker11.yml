@@ -18,8 +18,8 @@ jobs:
           registry: docker.pkg.github.com
           args: |
             cd docker/11
-            docker build -t docker.pkg.github.com/anzerr/node/node:11 . &&
-            docker push docker.pkg.github.com/anzerr/node/node:11
+            docker build -t docker.pkg.github.com/anzerr/node.docker/node.docker:11 . &&
+            docker push docker.pkg.github.com/anzerr/node.docker/node.docker:11
       - uses: anzerr/docker.action@master
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
@@ -35,8 +35,8 @@ jobs:
           registry: docker.pkg.github.com
           args: |
             cd docker/11/slim
-            docker build -t docker.pkg.github.com/anzerr/node/node:slim-11 . &&
-            docker push docker.pkg.github.com/anzerr/node/node:slim-11
+            docker build -t docker.pkg.github.com/anzerr/node.docker/node.docker:slim-11 . &&
+            docker push docker.pkg.github.com/anzerr/node.docker/node.docker:slim-11
       - uses: anzerr/docker.action@master
         with:
           username: ${{ secrets.DOCKER_USERNAME }}

@@ -20,8 +20,8 @@ jobs:
           registry: docker.pkg.github.com
           args: |
             cd docker/${version}
-            docker build -t docker.pkg.github.com/anzerr/node/node:${version} . &&
-            docker push docker.pkg.github.com/anzerr/node/node:${version}
+            docker build -t docker.pkg.github.com/anzerr/node.docker/node.docker:${version} . &&
+            docker push docker.pkg.github.com/anzerr/node.docker/node.docker:${version}
       - uses: anzerr/docker.action@master
         with:
           username: \${{ secrets.DOCKER_USERNAME }}
@@ -37,8 +37,8 @@ jobs:
           registry: docker.pkg.github.com
           args: |
             cd docker/${version}/slim
-            docker build -t docker.pkg.github.com/anzerr/node/node:slim-${version} . &&
-            docker push docker.pkg.github.com/anzerr/node/node:slim-${version}
+            docker build -t docker.pkg.github.com/anzerr/node.docker/node.docker:slim-${version} . &&
+            docker push docker.pkg.github.com/anzerr/node.docker/node.docker:slim-${version}
       - uses: anzerr/docker.action@master
         with:
           username: \${{ secrets.DOCKER_USERNAME }}
