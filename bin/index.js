@@ -3,6 +3,7 @@
 const {Cli, Map} = require('cli.util'),
 	Node = require('./images/node.js'),
 	Slim = require('./images/slim.js'),
+	Build = require('./images/build.js'),
 	Request = require('request.libary'),
 	fs = require('fs.promisify'),
 	workflow = require('./workflow.js');
@@ -50,6 +51,7 @@ if (!cli.get('name')) {
 			((key, v) => {
 				wait.push(Promise.all([
 					new Node(v, '1.19.1').toFile(),
+					new Build(key).toFile(),
 					new Slim(key).toFile(),
 					fs.writeFile(`.github/workflows/docker${key}.yml`, workflow(key))
 				]));

@@ -36,6 +36,23 @@ jobs:
           password: \${{ secrets.DOCKER_PASSWORD }}
           registry: docker.pkg.github.com
           args: |
+            cd docker/${version}/build
+            docker build -t docker.pkg.github.com/anzerr/node.docker/node.docker:build-${version} . &&
+            docker push docker.pkg.github.com/anzerr/node.docker/node.docker:build-${version}
+      - uses: anzerr/docker.action@master
+        with:
+          username: \${{ secrets.DOCKER_USERNAME }}
+          password: \${{ secrets.DOCKER_HUB_PASSWORD }}
+          args: |
+            cd docker/${version}/build
+            docker build -t anzerr/node:build-${version} . &&
+            docker push anzerr/node:build-${version}
+      - uses: anzerr/docker.action@master
+        with:
+          username: \${{ secrets.DOCKER_USERNAME }}
+          password: \${{ secrets.DOCKER_PASSWORD }}
+          registry: docker.pkg.github.com
+          args: |
             cd docker/${version}/slim
             docker build -t docker.pkg.github.com/anzerr/node.docker/node.docker:slim-${version} . &&
             docker push docker.pkg.github.com/anzerr/node.docker/node.docker:slim-${version}
