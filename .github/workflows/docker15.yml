@@ -1,0 +1,64 @@
+
+name: docker15
+
+on:
+  push:
+    paths:
+      - docker/15/**
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: anzerr/docker.action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: docker.pkg.github.com
+          args: |
+            cd docker/15
+            docker build -t docker.pkg.github.com/anzerr/node.docker/node.docker:15 . &&
+            docker push docker.pkg.github.com/anzerr/node.docker/node.docker:15
+      - uses: anzerr/docker.action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          args: |
+            cd docker/15
+            docker build -t anzerr/node:15 . &&
+            docker push anzerr/node:15
+      - uses: anzerr/docker.action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: docker.pkg.github.com
+          args: |
+            cd docker/15/build
+            docker build -t docker.pkg.github.com/anzerr/node.docker/node.docker:build-15 . &&
+            docker push docker.pkg.github.com/anzerr/node.docker/node.docker:build-15
+      - uses: anzerr/docker.action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          args: |
+            cd docker/15/build
+            docker build -t anzerr/node:build-15 . &&
+            docker push anzerr/node:build-15
+      - uses: anzerr/docker.action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: docker.pkg.github.com
+          args: |
+            cd docker/15/slim
+            docker build -t docker.pkg.github.com/anzerr/node.docker/node.docker:slim-15 . &&
+            docker push docker.pkg.github.com/anzerr/node.docker/node.docker:slim-15
+      - uses: anzerr/docker.action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          args: |
+            cd docker/15/slim
+            docker build -t anzerr/node:slim-15 . &&
+            docker push anzerr/node:slim-15
