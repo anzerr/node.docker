@@ -50,7 +50,7 @@ if (!cli.get('name')) {
 		for (let i in res) {
 			((key, v) => {
 				wait.push(Promise.all([
-					new Node(v, '1.19.1').toFile(),
+					new Node(v, '1.19.1', (key === '16') ? '3' : null).toFile(),
 					new Build(key).toFile(),
 					new Slim(key).toFile(),
 					fs.writeFile(`.github/workflows/docker${key}.yml`, workflow(key))

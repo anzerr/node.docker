@@ -3,7 +3,7 @@ const mkdir = require('fs.mkdirp');
 
 class Node extends require('../base.js') {
 
-	constructor(node, yarn) {
+	constructor(node, yarn, python) {
 		super();
 		this.author = 'anzerr';
 		this.version = node.match(/^(\d+)\./)[1];
@@ -13,6 +13,7 @@ class Node extends require('../base.js') {
 			NODE_VERSION: node,
 			YARN_VERSION: yarn
 		};
+		this.python = python;
 	}
 
 	build() {
@@ -31,7 +32,7 @@ class Node extends require('../base.js') {
 						'libgcc',
 						'linux-headers',
 						'make',
-						'python',
+						this.python === '3'? 'python3' : 'python'
 					].join(' '),
 					/*eslint-disable */
 					`for key in \
@@ -46,6 +47,7 @@ class Node extends require('../base.js') {
 						A48C2BEE680E841632CD4E44F07496B3EB3C1762 \
 						108F52B48DB57BB0CC439B2997B01419BD92F80A \
 						B9E2F5981AA6E0CD28160D9FF13993A75599653C \
+						B9AE9905FFD7803F25714661B63B535A4C206CA9 \
 					; do \
 						gpg --batch --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" || \
 						gpg --batch --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys "$key" || \
