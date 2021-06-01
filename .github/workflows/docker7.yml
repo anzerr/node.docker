@@ -3,6 +3,8 @@ name: docker7
 
 on:
   push:
+    branches:
+      - master
     paths:
       - docker/7/**
 

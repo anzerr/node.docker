@@ -3,6 +3,8 @@ name: docker11
 
 on:
   push:
+    branches:
+      - master
     paths:
       - docker/11/**
 

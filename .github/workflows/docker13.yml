@@ -3,6 +3,8 @@ name: docker13
 
 on:
   push:
+    branches:
+      - master
     paths:
       - docker/13/**
 

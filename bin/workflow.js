@@ -5,6 +5,8 @@ name: docker${version}
 
 on:
   push:
+    branches:
+      - master
     paths:
       - docker/${version}/**
 

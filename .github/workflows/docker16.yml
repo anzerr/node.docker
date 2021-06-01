@@ -3,6 +3,8 @@ name: docker16
 
 on:
   push:
+    branches:
+      - master
     paths:
       - docker/16/**
 

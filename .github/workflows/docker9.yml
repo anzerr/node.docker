@@ -3,6 +3,8 @@ name: docker9
 
 on:
   push:
+    branches:
+      - master
     paths:
       - docker/9/**
 

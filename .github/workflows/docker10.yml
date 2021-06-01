@@ -3,6 +3,8 @@ name: docker10
 
 on:
   push:
+    branches:
+      - master
     paths:
       - docker/10/**
 

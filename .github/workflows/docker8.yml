@@ -3,6 +3,8 @@ name: docker8
 
 on:
   push:
+    branches:
+      - master
     paths:
       - docker/8/**
 
