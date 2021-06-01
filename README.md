@@ -8,6 +8,9 @@
 ![GitHub Actions status | linter](https://github.com/anzerr/node.docker/workflows/docker11/badge.svg)
 ![GitHub Actions status | linter](https://github.com/anzerr/node.docker/workflows/docker12/badge.svg)
 ![GitHub Actions status | linter](https://github.com/anzerr/node.docker/workflows/docker13/badge.svg)
+![GitHub Actions status | linter](https://github.com/anzerr/node.docker/workflows/docker14/badge.svg)
+![GitHub Actions status | linter](https://github.com/anzerr/node.docker/workflows/docker15/badge.svg)
+![GitHub Actions status | linter](https://github.com/anzerr/node.docker/workflows/docker16/badge.svg)
 
 Docker images for NodeJs with npm and yarm and a slim version without
 
